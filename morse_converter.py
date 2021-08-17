@@ -7,7 +7,9 @@ conversion = {
     'k' : '-.-',    'l' : '.-..',   'm' : '--',     'n' : '-.',     'o' : '---',
     'p' : '.--.',   'q' : '--.-',   'r' : '.-.',    's' : '...',    't' : '-',
     'u' : '..-',    'v' : '...-',   'w' : '.--',    'x' : '-..-',   'y' : '-.--',
-    'z' : '--..'    }
+    'z' : '--..',   '1' : '.----',  '2' : '..---',  '3' : '...--',  '4' : '....-',
+    '5' : '.....',  '6' : '-....',  '7' : '--...',  '8' : '---..',  '9' : '----.',
+    '0': '-----'    }
 
 def ascii2morse(*args):
     # get string of input ascii text and lower case it
@@ -68,20 +70,21 @@ root.rowconfigure(0, weight=1)
 
 # establish input entry
 input_text = StringVar()
-input_text_entry = ttk.Entry(mf, width=25, textvariable=input_text)
-input_text_entry.grid(column=2, row=1)
+input_text_entry = ttk.Entry(mf, width=50, textvariable=input_text)
+input_text_entry.grid(column=2, row=2, columnspan=2)
 
 # establish output display
 output_text = StringVar()
-ttk.Label(mf, textvariable=output_text, wraplength=250, justify=LEFT).grid(column=2, row=3)
+ttk.Label(mf, textvariable=output_text, wraplength=250, justify=LEFT).grid(column=2, row=4)
 
 # create buttons to convert
-ttk.Button(mf, text="Convert ASCII to Morse", command=ascii2morse).grid(column=2, row=2)
-ttk.Button(mf, text="Convert Morse to ASCII", command=morse2ascii).grid(column=3, row=2)
+ttk.Button(mf, text="Convert ASCII to Morse", command=ascii2morse).grid(column=2, row=3)
+ttk.Button(mf, text="Convert Morse to ASCII", command=morse2ascii).grid(column=3, row=3)
 
-# add labels in input and output fields
-ttk.Label(mf, text="Type here: ").grid(column=1, row=1)
-ttk.Label(mf, text="Translation: ").grid(column=1, row=3)
+# add labels for input and output fields and instructions
+ttk.Label(mf, text="Type here: ").grid(column=1, row=2)
+ttk.Label(mf, text="Translation: ").grid(column=1, row=4)
+ttk.Label(mf, text="When inputting Morse code, place 1 space between each letter in a word and 4 spaces to indicate a space between words", wraplength=400, justify=LEFT).grid(column=1, row=1, columnspan=4)
 
 # give some padding to the widgets in the main frame
 for child in mf.winfo_children():
