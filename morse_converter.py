@@ -11,7 +11,7 @@ conversion = {
 
 def ascii2morse(*args):
     # get string of input ascii text and lower case it
-    ascii_str = str(ascii_text.get())
+    ascii_str = str(input_text.get())
     ascii_str = ascii_str.lower()
     morse_str = ''
 
@@ -31,7 +31,29 @@ def ascii2morse(*args):
             i += 1    
 
     # assign the converted string to be displayed
-    morse_text.set(morse_str)
+    output_text.set(morse_str)
+
+def morse2ascii(*args):
+    # get input string
+    morse_str = str(input_text.get())
+    ascii_str = ''
+
+    # replace spaces ('    ') with ' xxx '
+    morse_str = morse_str.replace('    ', ' xxx ')
+
+    # swap keys and values in conversion dict
+    m2a_conversion = {v : k for k, v in conversion.items()}
+    # add entry to 
+    m2a_conversion['xxx'] = ' '
+
+    # separate into list of strings, each containing 1 Morse character
+    morse_list = morse_str.split()
+
+    for char in morse_list:
+        ascii_str += m2a_conversion[char]
+
+    # assign the converted string to be displayed
+    output_text.set(ascii_str)
 
 
 # set main window 
@@ -45,27 +67,28 @@ root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 
 # establish input entry
-ascii_text = StringVar()
-ascii_text_entry = ttk.Entry(mf, width=25, textvariable=ascii_text)
-ascii_text_entry.grid(column=2, row=1)
+input_text = StringVar()
+input_text_entry = ttk.Entry(mf, width=25, textvariable=input_text)
+input_text_entry.grid(column=2, row=1)
 
 # establish output display
-morse_text = StringVar()
-ttk.Label(mf, textvariable=morse_text, wraplength=250, justify=LEFT).grid(column=2, row=3)
+output_text = StringVar()
+ttk.Label(mf, textvariable=output_text, wraplength=250, justify=LEFT).grid(column=2, row=3)
 
-# create button to convert
-ttk.Button(mf, text="Convert", command=ascii2morse).grid(column=2, row=2)
+# create buttons to convert
+ttk.Button(mf, text="Convert ASCII to Morse", command=ascii2morse).grid(column=2, row=2)
+ttk.Button(mf, text="Convert Morse to ASCII", command=morse2ascii).grid(column=3, row=2)
 
 # add labels in input and output fields
-ttk.Label(mf, text="ASCII text: ").grid(column=1, row=1)
-ttk.Label(mf, text="Morse text: ").grid(column=1, row=3)
+ttk.Label(mf, text="Type here: ").grid(column=1, row=1)
+ttk.Label(mf, text="Translation: ").grid(column=1, row=3)
 
 # give some padding to the widgets in the main frame
 for child in mf.winfo_children():
     child.grid_configure(padx=5, pady=5)
 
 # start with cursor in input box and assign Enter key to start conversion
-ascii_text_entry.focus()
+input_text_entry.focus()
 root.bind("<Return>", ascii2morse)
 
 # start main event monitoring loop
