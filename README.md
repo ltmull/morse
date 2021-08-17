@@ -1,3 +1,3 @@
 # morse
 
-A GUI tool to convert between ASCII text and Morse code
+A GUI tool to convert between ASCII text (English a-z, 0-9) and International Morse code
